@@ -168,6 +168,8 @@ boolean Consult::getRegisterValue(byte msbAddr, byte lsbAddr, int *returnValue)
   if (!errorCheckCommandByte(ECU_COMMAND_READ_REGISTER, ecuByte)) {
     return false;
   }  
+
+
   
   // Read until we get FF over (start frame)
   // Really I should do better validation here
@@ -460,7 +462,7 @@ boolean Consult::readEcuStream(ConsultRegister myRegisters[], int numRegisters)
     readEcu(&ecuByte);
     // Dont get stuck here forever, 
     // This should be a a safe max number of reads
-    if (readCount > (numRegisters * 2) + 10) {
+    if (readCount++ > (numRegisters * 2) + 10) {
       // Failed to find start frame!
       return false;
     }
